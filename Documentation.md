@@ -25,8 +25,8 @@ put this below local gui = SmuggleGui.new("", {
 
 ```lua
 
-   useKeySystem = true,
-    correctKey = "supersecret", -- change to your key
+   useKeySystem = true,  --set false if you dont wanna make key system
+    correctKey = "yourkey123", -- change to your key
     keyLink = "https://your-get-key-link.com", -- change to your URL
 })
 
