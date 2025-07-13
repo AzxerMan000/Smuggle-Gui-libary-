@@ -7,7 +7,7 @@ This documentation is for the stable release of SmuggleUI Library, a modular Rob
 ## Booting the Library
 
 ```lua
-local SmuggleGui = loadstring(game:HttpGet("https://raw.githubusercontent.com/AzxerMan000/Smuggle-Gui-libary-/refs/heads/main/Main"))
+local SmuggleGui = loadstring(game:HttpGet("https://pastefy.app/DErxDuNa/raw"))
 ```
 
 ## Creating GUI
