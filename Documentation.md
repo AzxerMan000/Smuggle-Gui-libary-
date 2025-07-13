@@ -1,10 +1,19 @@
 # SmuggleUI Library
 
-This documentation is for the stable release of SmuggleUI Library, a modular Roblox GUI framework with tabs, toggles, tweening, and more.
+This documentation is for the stable release of SmuggleUI Library, a modular Roblox GUI framework with tabs, togges and even Buttons
 
 ---
 
 ## Booting the Library
 
 ```lua
-local SmuggleUI = require(game:GetService("ReplicatedStorage"):WaitForChild("GuiLibrary"))
+local SmuggleGui = loadstring(game:HttpGet("https://raw.githubusercontent.com/AzxerMan000/Smuggle-Gui-libary-/refs/heads/main/Main"))()
+--
+
+## Creating The GUI
+
+```lua
+
+local gui = SmuggleGui.new("Untitled")
+
+
