@@ -41,6 +41,8 @@ task.wait(9)
 
     -- Now it's safe to add tabs
     local mainTab = gui:AddTab("example")
+
+--if you wanna add another tab you have to change the local 
     
 
 ```
