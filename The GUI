@@ -34,7 +34,7 @@ function SmuggleGui.new(titleText, config)
         Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 10)
 
         local titleLabel = Instance.new("TextLabel", frame)
-        titleLabel.Text = "🔐 Enter Smuggle Key"
+        titleLabel.Text = "🔐 Enter Key"
         titleLabel.Size = UDim2.new(1, 0, 0, 35)
         titleLabel.Position = UDim2.new(0, 0, 0, 10)
         titleLabel.BackgroundTransparency = 1
