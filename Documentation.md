@@ -40,7 +40,7 @@ adding buttons is main thing so its highly Recommended.
 
 ```lua
 
-examapleTab:AddButton("example", function()
+exampleTab:AddButton("example", function()
 --your script of whatever print you wanna add
 end)
 
