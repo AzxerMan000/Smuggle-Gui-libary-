@@ -69,6 +69,4 @@ end)
 
 ```
 
-## Thats all i can tell new updates will come soon TOMORROW 
-
-key system commin you excited?
+## key system CAME NOW but still in works btw imma test it
