@@ -38,6 +38,8 @@ this is the tab if you dont have one you cant load toggles or Button.
 
 ```lua
 
+task.wait(3)
+
 local mainTab = gui:AddTab("ExampleTab")
 
 ```
