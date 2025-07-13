@@ -192,7 +192,16 @@ end
 -- Just paste your original implementations exactly as before
 
 function SmuggleGui:AddTab(name)
-    local tabIndex = #self.pages + 1
+    if not self.pages then
+        self.pages = {}
+    end
+
+    local tabIndex = 1
+    while self.pages[tabIndex] do
+        tabIndex = tabIndex + 1
+    end
+
+    
 
     local tab = Instance.new("TextButton", self.tabPanel)
     tab.Size = UDim2.new(1, -10, 0, 30)
