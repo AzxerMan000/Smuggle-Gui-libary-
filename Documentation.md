@@ -16,7 +16,19 @@ this is the main thing so you stick this thing to your usage script.
 
 ```lua
 
-local gui = SmuggleGui.new("My GUI")
+local gui = SmuggleGui.new("My GUI", {
+
+```
+
+## key system
+put this below local gui = SmuggleGui.new("", {
+
+```lua
+
+   useKeySystem = true,
+    correctKey = "supersecret", -- change to your key
+    keyLink = "https://your-get-key-link.com", -- change to your URL
+})
 
 ```
 
