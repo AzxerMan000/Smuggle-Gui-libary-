@@ -21,7 +21,7 @@ local gui = SmuggleGui.new("My GUI", {
 ```
 
 ## key system
-put this below local gui = SmuggleGui.new("", {
+put this below  { on the **creating gui**
 
 ```lua
     useKeySystem = true,  -- set false if you don't want the key system
