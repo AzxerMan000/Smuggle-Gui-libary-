@@ -28,8 +28,6 @@ this is the tab if you dont have one you cant load toggles or Button.
 
 local exampleTab = gui:AddTab("ExampleTab")
 
- --        ↑
-  --     you have to rename this first before giving it name
 ```
 
 ## Adding button To Your tab.
@@ -40,8 +38,8 @@ adding buttons is main thing so its highly Recommended.
 
 ```lua
 
-exampleTab:AddButton("example", function()
---your script of whatever print you wanna add
+exampleTab:AddButton("example", function(state)
+    print("example pressed.:",state)
 end)
 
 ```
