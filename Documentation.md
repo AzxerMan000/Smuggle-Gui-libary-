@@ -38,7 +38,7 @@ this is the tab if you dont have one you cant load toggles or Button.
 
 ```lua
 
-local exampleTab = gui:AddTab("ExampleTab")
+local mainTab = gui:AddTab("ExampleTab")
 
 ```
 
