@@ -28,8 +28,8 @@ this is the tab if you dont have one you cant load toggles or Button.
 
 local exampleTab = gui:AddTab("ExampleTab")
 
-         ↑
-       you have to rename this first before giving it name
+ --        ↑
+  --     you have to rename this first before giving it name
 ```
 
 ## Adding button To Your tab.
