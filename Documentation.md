@@ -24,10 +24,9 @@ local gui = SmuggleGui.new("My GUI", {
 put this below local gui = SmuggleGui.new("", {
 
 ```lua
-
-   useKeySystem = true,  --set false if you dont wanna make key system
+    useKeySystem = true,  -- set false if you don't want the key system
     correctKey = "yourkey123", -- change to your key
-    keyLink = "https://your-get-key-link.com", -- change to your URL
+    keyLink = "https://your-get-key-link.com" -- change to your URL
 })
 
 ```
