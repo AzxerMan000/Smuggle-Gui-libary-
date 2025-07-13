@@ -55,7 +55,7 @@ adding buttons is main thing so its highly Recommended.
 
 ```lua
 
-exampleTab:AddButton("example", function(state)
+mainTab:AddButton("example", function(state)
     print("example pressed.:",state)
 end)
 
@@ -67,7 +67,7 @@ this is optional so you can add or not add
 
 ```lua
 
-exampleTab:AddToggle("example", function(state)
+mainTab:AddToggle("example", function(state)
     print("example toggled.:", state)
 -- put your script here or what ever print you wanna add
 end)
