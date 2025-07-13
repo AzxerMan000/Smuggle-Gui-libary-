@@ -37,10 +37,13 @@ put this below local gui = SmuggleGui.new("", {
 this is the tab if you dont have one you cant load toggles or Button.
 
 ```lua
+--Wait until the GUI is created (after correct key entered)
+task.spawn(function()
+    repeat task.wait() until gui.main
 
-task.wait(3)
-
-local mainTab = gui:AddTab("ExampleTab")
+    -- Now it's safe to add tabs
+    local mainTab = gui:AddTab("example")
+    
 
 ```
 
