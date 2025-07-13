@@ -108,7 +108,6 @@ function SmuggleGui.new(titleText, config)
 end
 
 function SmuggleGui:CreateMainGui(titleText)
-    -- Your original main GUI code here
     self.gui = Instance.new("ScreenGui")
     self.gui.Name = "SmuggleGui"
     self.gui.ResetOnSpawn = false
@@ -188,9 +187,6 @@ function SmuggleGui:CreateMainGui(titleText)
     end)
 end
 
--- Include your AddTab, Kill, Minimize, Restore functions here unchanged
--- Just paste your original implementations exactly as before
-
 function SmuggleGui:AddTab(name)
     if not self.pages then
         self.pages = {}
@@ -200,8 +196,6 @@ function SmuggleGui:AddTab(name)
     while self.pages[tabIndex] do
         tabIndex = tabIndex + 1
     end
-
-    
 
     local tab = Instance.new("TextButton", self.tabPanel)
     tab.Size = UDim2.new(1, -10, 0, 30)
@@ -235,7 +229,12 @@ function SmuggleGui:AddTab(name)
         end
     end)
 
-    if #self.pages == 1 then
+    -- FIXED: Count tabs manually instead of # operator (which can error on sparse arrays)
+    local count = 0
+    for _ in pairs(self.pages) do
+        count = count + 1
+    end
+    if count == 1 then
         page.Visible = true
     end
 
