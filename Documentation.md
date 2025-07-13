@@ -16,7 +16,7 @@ this is the main thing so you stick this thing to your usage script.
 
 ```lua
 
-local gui = SmuggleGui.new("untitled")
+local gui = SmuggleGui.new("My GUI")
 
 ```
 
