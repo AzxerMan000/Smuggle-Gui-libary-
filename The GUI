@@ -82,20 +82,64 @@ function SmuggleGui.new(titleText, config)
         end)
 
         submit.MouseButton1Click:Connect(function()
-            local inputKey = keyBox.Text
-            if inputKey == self.correctKey then
-                -- Key is correct: remove key UI and create main GUI
-                keyGui:Destroy()
-                self:CreateMainGui(self._titleText)
-            else
-                StarterGui:SetCore("SendNotification", {
-                    Title = "SmuggleGui",
-                    Text = "Incorrect Key!",
-                    Duration = 3
-                })
-            end
-        end)
+            local function saveKeyToFile(key)
+    if writefile and isfolder and not isfolder("SmuggleGui") then
+        makefolder("SmuggleGui")
+    end
+    if writefile then
+        writefile("SmuggleGui/key.txt", key)
+    end
+end
+
+local function readSavedKey()
+    if isfile and isfile("SmuggleGui/key.txt") then
+        return readfile("SmuggleGui/key.txt")
+    end
+    return nil
+end
+
+-- AUTO LOAD SAVED KEY
+local savedKey = readSavedKey()
+if savedKey and savedKey == self.correctKey then
+    keyGui:Destroy()
+    self:CreateMainGui(self._titleText)
+    return self
+end
+
+-- Add toggle to save key
+local rememberToggle = Instance.new("TextButton", frame)
+rememberToggle.Size = UDim2.new(0.8, 0, 0, 25)
+rememberToggle.Position = UDim2.new(0.1, 0, 0, 130)
+rememberToggle.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+rememberToggle.Text = "Remember Key: OFF"
+rememberToggle.TextColor3 = Color3.new(1,1,1)
+rememberToggle.Font = Enum.Font.Gotham
+rememberToggle.TextSize = 14
+Instance.new("UICorner", rememberToggle).CornerRadius = UDim.new(0, 6)
+
+local remember = false
+rememberToggle.MouseButton1Click:Connect(function()
+    remember = not remember
+    rememberToggle.Text = "Remember Key: " .. (remember and "ON" or "OFF")
+    rememberToggle.BackgroundColor3 = remember and Color3.fromRGB(0, 170, 0) or Color3.fromRGB(80, 80, 80)
+end)
+
+submit.MouseButton1Click:Connect(function()
+    local inputKey = keyBox.Text
+    if inputKey == self.correctKey then
+        if remember then
+            saveKeyToFile(inputKey)
+        end
+        keyGui:Destroy()
+        self:CreateMainGui(self._titleText)
     else
+        StarterGui:SetCore("SendNotification", {
+            Title = "SmuggleGui",
+            Text = "Incorrect Key!",
+            Duration = 3
+        })
+    end
+end)
         -- No key system → create main GUI right away
         self:CreateMainGui(self._titleText)
     end
