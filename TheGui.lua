@@ -82,70 +82,92 @@ function SmuggleGui.new(titleText, config)
         end)
 
         submit.MouseButton1Click:Connect(function()
-            local function saveKeyToFile(key)
-    if writefile and isfolder and not isfolder("SmuggleGui") then
-        makefolder("SmuggleGui")
-    end
-    if writefile then
-        writefile("SmuggleGui/key.txt", key)
-    end
-end
+            if self.useKeySystem then
+    -- Create Key UI
+    local keyGui = Instance.new("ScreenGui")
+    keyGui.Name = "SmuggleGuiKeyUI"
+    keyGui.ResetOnSpawn = false
+    keyGui.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
 
-local function readSavedKey()
-    if isfile and isfile("SmuggleGui/key.txt") then
-        return readfile("SmuggleGui/key.txt")
-    end
-    return nil
-end
+    local frame = Instance.new("Frame", keyGui)
+    frame.Size = UDim2.new(0, 320, 0, 160)
+    frame.Position = UDim2.new(0.5, -160, 0.5, -80)
+    frame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+    frame.Active = true
+    frame.Draggable = true
+    Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 10)
 
--- AUTO LOAD SAVED KEY
-local savedKey = readSavedKey()
-if savedKey and savedKey == self.correctKey then
-    keyGui:Destroy()
-    self:CreateMainGui(self._titleText)
-    return self
-end
+    local titleLabel = Instance.new("TextLabel", frame)
+    titleLabel.Text = "🔐 Enter Key"
+    titleLabel.Size = UDim2.new(1, 0, 0, 35)
+    titleLabel.Position = UDim2.new(0, 0, 0, 10)
+    titleLabel.BackgroundTransparency = 1
+    titleLabel.TextColor3 = Color3.new(1, 1, 1)
+    titleLabel.Font = Enum.Font.GothamBold
+    titleLabel.TextSize = 20
 
--- Add toggle to save key
-local rememberToggle = Instance.new("TextButton", frame)
-rememberToggle.Size = UDim2.new(0.8, 0, 0, 25)
-rememberToggle.Position = UDim2.new(0.1, 0, 0, 130)
-rememberToggle.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
-rememberToggle.Text = "Remember Key: OFF"
-rememberToggle.TextColor3 = Color3.new(1,1,1)
-rememberToggle.Font = Enum.Font.Gotham
-rememberToggle.TextSize = 14
-Instance.new("UICorner", rememberToggle).CornerRadius = UDim.new(0, 6)
+    local keyBox = Instance.new("TextBox", frame)
+    keyBox.PlaceholderText = "Enter Key Here"
+    keyBox.Size = UDim2.new(0.8, 0, 0, 30)
+    keyBox.Position = UDim2.new(0.1, 0, 0, 55)
+    keyBox.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    keyBox.TextColor3 = Color3.new(1, 1, 1)
+    keyBox.TextSize = 14
+    keyBox.Font = Enum.Font.Gotham
+    Instance.new("UICorner", keyBox).CornerRadius = UDim.new(0, 8)
 
-local remember = false
-rememberToggle.MouseButton1Click:Connect(function()
-    remember = not remember
-    rememberToggle.Text = "Remember Key: " .. (remember and "ON" or "OFF")
-    rememberToggle.BackgroundColor3 = remember and Color3.fromRGB(0, 170, 0) or Color3.fromRGB(80, 80, 80)
-end)
+    local getKey = Instance.new("TextButton", frame)
+    getKey.Text = "Get Key"
+    getKey.Size = UDim2.new(0.4, -5, 0, 30)
+    getKey.Position = UDim2.new(0.1, 0, 0, 95)
+    getKey.BackgroundColor3 = Color3.fromRGB(70, 130, 180)
+    getKey.TextColor3 = Color3.new(1, 1, 1)
+    getKey.Font = Enum.Font.Gotham
+    getKey.TextSize = 14
+    Instance.new("UICorner", getKey).CornerRadius = UDim.new(0, 8)
 
-submit.MouseButton1Click:Connect(function()
-    local inputKey = keyBox.Text
-    if inputKey == self.correctKey then
-        if remember then
-            saveKeyToFile(inputKey)
-        end
-        keyGui:Destroy()
-        self:CreateMainGui(self._titleText)
-    else
+    local submit = Instance.new("TextButton", frame)
+    submit.Text = "Submit"
+    submit.Size = UDim2.new(0.4, -5, 0, 30)
+    submit.Position = UDim2.new(0.5, 5, 0, 95)
+    submit.BackgroundColor3 = Color3.fromRGB(0, 170, 0)
+    submit.TextColor3 = Color3.new(1, 1, 1)
+    submit.Font = Enum.Font.GothamBold
+    submit.TextSize = 14
+    Instance.new("UICorner", submit).CornerRadius = UDim.new(0, 8)
+
+    getKey.MouseButton1Click:Connect(function()
+        pcall(function()
+            setclipboard(self.keyLink)
+        end)
         StarterGui:SetCore("SendNotification", {
             Title = "SmuggleGui",
-            Text = "Incorrect Key!",
+            Text = "Key link copied to clipboard!",
             Duration = 3
         })
-    end
-end)
-        -- No key system → create main GUI right away
-        self:CreateMainGui(self._titleText)
-    end
+    end)
+
+    submit.MouseButton1Click:Connect(function()
+        local inputKey = keyBox.Text
+        if inputKey == self.correctKey then
+            keyGui:Destroy()
+            self:CreateMainGui(self._titleText)
+        else
+            StarterGui:SetCore("SendNotification", {
+                Title = "SmuggleGui",
+                Text = "Incorrect Key!",
+                Duration = 3
+            })
+        end
+    end)
+else
+    -- No key system → create main GUI right away
+    self:CreateMainGui(self._titleText)
+                end
 
     return self
-end
+
+            end
 
 function SmuggleGui:CreateMainGui(titleText)  
     self.gui = Instance.new("ScreenGui")  
