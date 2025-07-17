@@ -16,8 +16,7 @@ function SmuggleGui.new(titleText, config)
     self._titleText = titleText or "SmuggleGui"
 
     if self.useKeySystem then
-        -- Create Key UI
-        submit.MouseButton1Click:Connect(function()
+        -- Create Key system UI
             if self.useKeySystem then
     -- Create Key UI
     local keyGui = Instance.new("ScreenGui")
