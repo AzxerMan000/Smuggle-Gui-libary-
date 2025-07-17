@@ -319,7 +319,6 @@ end
 function SmuggleGui:Minimize()
         self.main.Visible = false
         self.restore.Visible = true
-    end)
 end
 
 function SmuggleGui:Restore()
