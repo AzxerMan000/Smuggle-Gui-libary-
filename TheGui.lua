@@ -317,8 +317,19 @@ function SmuggleGui:Kill()
 end
 
 function SmuggleGui:Minimize()
-    self.main.Visible = false
-    self.restore.Visible = true
+    local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
+
+    local minimizeTween = TweenService:Create(self.mainGui, tweenInfo, {
+        Size = UDim2.new(0, 200, 0, 30),
+        Position = UDim2.new(0.5, -100, 0.5, -15)
+    })
+
+    minimizeTween:Play()
+
+    minimizeTween.Completed:Connect(function()
+        self.main.Visible = false
+        self.restore.Visible = true
+    end)
 end
 
 function SmuggleGui:Restore()
