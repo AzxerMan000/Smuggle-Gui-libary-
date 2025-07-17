@@ -317,9 +317,10 @@ function SmuggleGui:Kill()
 end
 
 function SmuggleGui:Minimize()
+    function SmuggleGui:Minimize()
     local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
 
-    local minimizeTween = TweenService:Create(self.mainGui, tweenInfo, {
+    local minimizeTween = TweenService:Create(self.main, tweenInfo, {
         Size = UDim2.new(0, 200, 0, 30),
         Position = UDim2.new(0.5, -100, 0.5, -15)
     })
