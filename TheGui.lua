@@ -144,16 +144,53 @@ function SmuggleGui:CreateMainGui(titleText)
     self.minimize.TextSize = 18
     Instance.new("UICorner", self.minimize).CornerRadius = UDim.new(0, 6)
 
-    self.restore = Instance.new("TextButton", self.gui)
-    self.restore.Size = UDim2.new(0, 100, 0, 30)
-    self.restore.Position = UDim2.new(0, 10, 1, -40)
-    self.restore.Text = "Open GUI"
-    self.restore.BackgroundColor3 = Color3.fromRGB(50, 120, 255)
-    self.restore.TextColor3 = Color3.new(1, 1, 1)
-    self.restore.Font = Enum.Font.Gotham
-    self.restore.TextSize = 16
-    self.restore.Visible = false
-    Instance.new("UICorner", self.restore).CornerRadius = UDim.new(0, 8)
+self.restore = Instance.new("TextButton", self.gui)
+self.restore.Size = UDim2.new(0, 250, 0, 40) -- wider and taller
+self.restore.Position = UDim2.new(0.5, -125, 0, 10) -- top center with margin
+self.restore.Text = "Open"
+self.restore.BackgroundColor3 = Color3.fromRGB(50, 120, 255)
+self.restore.TextColor3 = Color3.new(1, 1, 1)
+self.restore.Font = Enum.Font.Gotham
+self.restore.TextSize = 18
+self.restore.Visible = false
+Instance.new("UICorner", self.restore).CornerRadius = UDim.new(0, 12)
+
+local stroke = Instance.new("UIStroke", self.restore)
+stroke.Thickness = 3
+
+local TweenService = game:GetService("TweenService")
+local rainbowColors = {
+    Color3.fromRGB(255, 0, 0),    -- red
+    Color3.fromRGB(255, 127, 0),  -- orange
+    Color3.fromRGB(255, 255, 0),  -- yellow
+    Color3.fromRGB(0, 255, 0),    -- green
+    Color3.fromRGB(0, 0, 255),    -- blue
+    Color3.fromRGB(75, 0, 130),   -- indigo
+    Color3.fromRGB(148, 0, 211),  -- violet
+}
+
+spawn(function()
+    local i = 1
+    while true do
+        local nextIndex = (i % #rainbowColors) + 1
+        local tween = TweenService:Create(stroke, TweenInfo.new(2), {Color = rainbowColors[nextIndex]})
+        tween:Play()
+        tween.Completed:Wait()
+        i = nextIndex
+    end
+end)
+
+    self.tabPanel = Instance.new("Frame", self.main)
+    self.tabPanel.Size = UDim2.new(0, 120, 1, -50)
+    self.tabPanel.Position = UDim2.new(0, 10, 0, 45)
+    self.tabPanel.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+    Instance.new("UICorner", self.tabPanel).CornerRadius = UDim.new(0, 8)
+
+    self.tabPanel = Instance.new("Frame", self.main)
+    self.tabPanel.Size = UDim2.new(0, 120, 1, -50)
+    self.tabPanel.Position = UDim2.new(0, 10, 0, 45)
+    self.tabPanel.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+    Instance.new("UICorner", self.tabPanel).CornerRadius = UDim.new(0, 8)
 
     self.tabPanel = Instance.new("Frame", self.main)
     self.tabPanel.Size = UDim2.new(0, 120, 1, -50)
