@@ -37,7 +37,7 @@ this is the tab if you dont have one you cant load toggles or Button.
 
 ```lua
 --Wait until the GUI is created (after correct key entered)
-task.wait(5)
+task.wait(9)
  
 
     -- Now it's safe to add tabs
