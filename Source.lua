@@ -15,7 +15,6 @@ function SmuggleGui.new(titleText, config)
     self._titleText = titleText or "SmuggleGui"
 
     if self.useKeySystem then
-        -- Create Key UI
         local keyGui = Instance.new("ScreenGui")
         keyGui.Name = "SmuggleGuiKeyUI"
         keyGui.ResetOnSpawn = false
@@ -69,9 +68,7 @@ function SmuggleGui.new(titleText, config)
         Instance.new("UICorner", submit).CornerRadius = UDim.new(0, 8)
 
         getKey.MouseButton1Click:Connect(function()
-            pcall(function()
-                setclipboard(self.keyLink)
-            end)
+            pcall(function() setclipboard(self.keyLink) end)
             StarterGui:SetCore("SendNotification", {
                 Title = "SmuggleGui",
                 Text = "Key link copied to clipboard!",
@@ -80,8 +77,7 @@ function SmuggleGui.new(titleText, config)
         end)
 
         submit.MouseButton1Click:Connect(function()
-            local inputKey = keyBox.Text
-            if inputKey == self.correctKey then
+            if keyBox.Text == self.correctKey then
                 keyGui:Destroy()
                 self:CreateMainGui(self._titleText)
             else
@@ -93,7 +89,6 @@ function SmuggleGui.new(titleText, config)
             end
         end)
     else
-        -- No key system → create main GUI right away
         self:CreateMainGui(self._titleText)
     end
 
@@ -144,53 +139,39 @@ function SmuggleGui:CreateMainGui(titleText)
     self.minimize.TextSize = 18
     Instance.new("UICorner", self.minimize).CornerRadius = UDim.new(0, 6)
 
-self.restore = Instance.new("TextButton", self.gui)
-self.restore.Size = UDim2.new(0, 250, 0, 40) -- wider and taller
-self.restore.Position = UDim2.new(0.5, -125, 0, 10) -- top center with margin
-self.restore.Text = "Open"
-self.restore.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-self.restore.TextColor3 = Color3.new(1, 1, 1)
-self.restore.Font = Enum.Font.Gotham
-self.restore.TextSize = 18
-self.restore.Visible = false
-Instance.new("UICorner", self.restore).CornerRadius = UDim.new(0, 12)
+    self.restore = Instance.new("TextButton", self.gui)
+    self.restore.Size = UDim2.new(0, 250, 0, 40)
+    self.restore.Position = UDim2.new(0.5, -125, 0, 10)
+    self.restore.Text = "Open"
+    self.restore.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    self.restore.TextColor3 = Color3.new(1, 1, 1)
+    self.restore.Font = Enum.Font.Gotham
+    self.restore.TextSize = 18
+    self.restore.Visible = false
+    Instance.new("UICorner", self.restore).CornerRadius = UDim.new(0, 12)
 
-local stroke = Instance.new("UIStroke", self.restore)
-stroke.Thickness = 3
+    local stroke = Instance.new("UIStroke", self.restore)
+    stroke.Thickness = 3
 
-local TweenService = game:GetService("TweenService")
-local rainbowColors = {
-    Color3.fromRGB(255, 0, 0),    -- red
-    Color3.fromRGB(255, 127, 0),  -- orange
-    Color3.fromRGB(255, 255, 0),  -- yellow
-    Color3.fromRGB(0, 255, 0),    -- green
-    Color3.fromRGB(0, 0, 255),    -- blue
-    Color3.fromRGB(75, 0, 130),   -- indigo
-    Color3.fromRGB(148, 0, 211),  -- violet
-}
+    local rainbowColors = {
+        Color3.fromRGB(255, 0, 0),
+        Color3.fromRGB(255, 127, 0),
+        Color3.fromRGB(255, 255, 0),
+        Color3.fromRGB(0, 255, 0),
+        Color3.fromRGB(0, 0, 255),
+        Color3.fromRGB(75, 0, 130),
+        Color3.fromRGB(148, 0, 211),
+    }
 
-spawn(function()
-    local i = 1
-    while true do
-        local nextIndex = (i % #rainbowColors) + 1
-        local tween = TweenService:Create(stroke, TweenInfo.new(2), {Color = rainbowColors[nextIndex]})
-        tween:Play()
-        tween.Completed:Wait()
-        i = nextIndex
-    end
-end)
-
-    self.tabPanel = Instance.new("Frame", self.main)
-    self.tabPanel.Size = UDim2.new(0, 120, 1, -50)
-    self.tabPanel.Position = UDim2.new(0, 10, 0, 45)
-    self.tabPanel.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-    Instance.new("UICorner", self.tabPanel).CornerRadius = UDim.new(0, 8)
-
-    self.tabPanel = Instance.new("Frame", self.main)
-    self.tabPanel.Size = UDim2.new(0, 120, 1, -50)
-    self.tabPanel.Position = UDim2.new(0, 10, 0, 45)
-    self.tabPanel.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-    Instance.new("UICorner", self.tabPanel).CornerRadius = UDim.new(0, 8)
+    task.spawn(function()
+        local i = 1
+        while self.restore and self.restore.Parent do
+            local nextIndex = (i % #rainbowColors) + 1
+            TweenService:Create(stroke, TweenInfo.new(2), {Color = rainbowColors[nextIndex]}):Play()
+            task.wait(2)
+            i = nextIndex
+        end
+    end)
 
     self.tabPanel = Instance.new("Frame", self.main)
     self.tabPanel.Size = UDim2.new(0, 120, 1, -50)
@@ -204,49 +185,46 @@ end)
 
     self.pages = {}
 
-    self.kill.MouseButton1Click:Connect(function()
-        self:Kill()
-    end)
-
-    self.minimize.MouseButton1Click:Connect(function()
-        self:Minimize()
-    end)
-
-    self.restore.MouseButton1Click:Connect(function()
-        self:Restore()
-    end)
+    self.kill.MouseButton1Click:Connect(function() self:Kill() end)
+    self.minimize.MouseButton1Click:Connect(function() self:Minimize() end)
+    self.restore.MouseButton1Click:Connect(function() self:Restore() end)
 end
 
+-- Tab and control logic is already good; reuse your `AddTab` function here as-is
+-- You can copy your existing AddTab implementation here, or I can reformat it if needed
+
 function SmuggleGui:AddTab(name)
-    if not self.pages then
-        self.pages = {}
-    end
+    if not self.pages then self.pages = {} end
 
     local tabIndex = 1
     while self.pages[tabIndex] do
-        tabIndex = tabIndex + 1
+        tabIndex += 1
     end
 
-    local tab = Instance.new("TextButton", self.tabPanel)
+    -- Create tab button
+    local tab = Instance.new("TextButton")
     tab.Size = UDim2.new(1, -10, 0, 30)
     tab.Text = name
     tab.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
     tab.TextColor3 = Color3.new(1, 1, 1)
     tab.Font = Enum.Font.Gotham
     tab.TextSize = 14
+    tab.Parent = self.tabPanel
     Instance.new("UICorner", tab).CornerRadius = UDim.new(0, 6)
 
-    local page = Instance.new("ScrollingFrame", self.main)
+    -- Create scrollable content page
+    local page = Instance.new("ScrollingFrame")
     page.Size = UDim2.new(1, -150, 1, -60)
     page.Position = UDim2.new(0, 140, 0, 45)
     page.BackgroundTransparency = 1
     page.ScrollBarThickness = 5
     page.Visible = false
+    page.Parent = self.main
 
+    -- Dynamic layout
     local layout = Instance.new("UIListLayout", page)
     layout.Padding = UDim.new(0, 8)
     layout.SortOrder = Enum.SortOrder.LayoutOrder
-
     layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
         page.CanvasSize = UDim2.new(0, 0, 0, layout.AbsoluteContentSize.Y + 10)
     end)
@@ -259,11 +237,7 @@ function SmuggleGui:AddTab(name)
         end
     end)
 
-    local count = 0
-    for _ in pairs(self.pages) do
-        count = count + 1
-    end
-    if count == 1 then
+    if tabIndex == 1 then
         page.Visible = true
     end
 
@@ -274,14 +248,15 @@ function SmuggleGui:AddTab(name)
     }, {
         __index = function(t, k)
             if k == "AddToggle" then
-                return function(_, name, callback)
-                    local frame = Instance.new("Frame", t.page)
+                return function(_, labelText, callback)
+                    local frame = Instance.new("Frame")
                     frame.Size = UDim2.new(1, 0, 0, 40)
                     frame.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+                    frame.Parent = t.page
                     Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 8)
 
                     local label = Instance.new("TextLabel", frame)
-                    label.Text = name
+                    label.Text = labelText
                     label.Size = UDim2.new(0.6, 0, 1, 0)
                     label.Position = UDim2.new(0.05, 0, 0, 0)
                     label.BackgroundTransparency = 1
@@ -300,41 +275,37 @@ function SmuggleGui:AddTab(name)
                     toggle.TextSize = 14
                     Instance.new("UICorner", toggle).CornerRadius = UDim.new(0, 12)
 
-                    local on = false
+                    local isOn = false
                     toggle.MouseButton1Click:Connect(function()
-                        on = not on
-                        toggle.Text = on and "ON" or "OFF"
-                        toggle.BackgroundColor3 = on and Color3.fromRGB(0, 170, 0) or Color3.fromRGB(120, 120, 120)
-                        if callback and typeof(callback) == "function" then
-                            callback(on)
-                        end
+                        isOn = not isOn
+                        toggle.Text = isOn and "ON" or "OFF"
+                        toggle.BackgroundColor3 = isOn and Color3.fromRGB(0, 170, 0) or Color3.fromRGB(120, 120, 120)
+                        if callback then callback(isOn) end
                     end)
                 end
 
             elseif k == "AddButton" then
-                return function(_, name, onClick)
-                    local button = Instance.new("TextButton", t.page)
+                return function(_, labelText, onClick)
+                    local button = Instance.new("TextButton")
                     button.Size = UDim2.new(1, 0, 0, 40)
-                    button.Text = name
+                    button.Text = labelText
                     button.Font = Enum.Font.Gotham
                     button.TextSize = 16
                     button.TextColor3 = Color3.new(1, 1, 1)
                     button.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+                    button.Parent = t.page
                     Instance.new("UICorner", button).CornerRadius = UDim.new(0, 8)
 
-                    local currentCallback = onClick
+                    local callbackFunc = onClick
                     button.MouseButton1Click:Connect(function()
-                        if currentCallback and typeof(currentCallback) == "function" then
-                            currentCallback()
-                        else
-                            print(name .. " button clicked!")
-                        end
+                        if callbackFunc then callbackFunc() end
                     end)
 
                     return button, function(newCallback)
-                        currentCallback = newCallback
+                        callbackFunc = newCallback
                     end
                 end
+
             else
                 return rawget(t, k)
             end
@@ -354,8 +325,8 @@ function SmuggleGui:Kill()
 end
 
 function SmuggleGui:Minimize()
-        self.main.Visible = false
-        self.restore.Visible = true
+    self.main.Visible = false
+    self.restore.Visible = true
 end
 
 function SmuggleGui:Restore()
@@ -365,12 +336,11 @@ function SmuggleGui:Restore()
     self.main.Position = UDim2.new(0.5, -50, 0.5, -40)
     self.main.BackgroundTransparency = 1
 
-    local tween = TweenService:Create(self.main, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+    TweenService:Create(self.main, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
         Size = UDim2.new(0, 500, 0, 400),
         Position = UDim2.new(0.5, -250, 0.5, -200),
         BackgroundTransparency = 0,
-    })
-    tween:Play()
+    }):Play()
 end
 
 return SmuggleGui
