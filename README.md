@@ -1,4 +1,4 @@
-# SmuggleUI Library
+# Discontinued 
 
 This documentation is for the stable release of SmuggleUI Library, a modular Roblox GUI framework with tabs, togges and even Buttons
 
